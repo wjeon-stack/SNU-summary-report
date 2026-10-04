@@ -187,7 +187,13 @@ function showMsg(text, ok){
 }
 
 // ---------- Word 생성 ----------
-function ymd(s){ const [y, m, d] = String(s).split('-'); return `${y}년 ${parseInt(m,10)}월 ${parseInt(d,10)}일`; }
+function ymd(s){
+  let v = String(s);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){   // 혹시 날짜 객체 문자열("Tue Sep 01 2026 ...")로 저장된 값도 보정
+    const dt = new Date(v);
+    if(!isNaN(dt)) v = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+  }
+  const [y, m, d] = v.split('-'); return `${y}년 ${parseInt(m,10)}월 ${parseInt(d,10)}일`; }
 
 // 시트 한 행 → 템플릿 자리표시자 값
 function toTemplateData(r){
