@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>종합 코칭리포트 관리자</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.7/dist/pizzip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.71.0/build/docxtemplater.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<style>
+  :root{--navy:#16235C; --blue:#2F6FED; --blue-tint:#EAF1FF; --orange:#FF7A32; --pink-tint:#FFEAF0;
+    --paper:#F5F7FC; --white:#FFFFFF; --ink:#20242C; --slate:#697386; --line:#E7ECF7; --danger:#D9455F; --green:#1E9E6A; --green-tint:#E3F6EE;}
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Pretendard', -apple-system, 'Malgun Gothic', sans-serif; background:var(--paper); color:var(--ink); line-height:1.55;}
+  .wrap{max-width:1100px; margin:0 auto; padding:34px 20px 80px;}
+  .head{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:18px;}
+  h1{font-size:19px; color:var(--navy); margin:0 0 4px;}
+  .sub{font-size:13px; color:var(--slate);}
+  .btns{display:flex; gap:8px; flex-wrap:wrap;}
+  .btn{background:var(--blue); color:#fff; border:none; border-radius:10px; padding:10px 16px; font-size:13.5px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .btn:hover{background:#2559C7;}
+  .btn.ghost{background:var(--white); color:var(--navy); border:1.5px solid var(--line);}
+  .btn.ghost:hover{background:var(--blue-tint);}
+  .btn.sm{padding:6px 11px; font-size:12.5px; border-radius:8px;}
+  .btn:disabled{background:var(--slate); cursor:not-allowed;}
+  .stats{display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;}
+  .stat{background:var(--white); border-radius:12px; padding:12px 18px; box-shadow:0 2px 10px rgba(22,35,92,.05);}
+  .stat b{display:block; font-size:20px; color:var(--navy);}
+  .stat span{font-size:12px; color:var(--slate);}
+  .msg{display:none; border-radius:10px; padding:10px 14px; font-size:13px; font-weight:700; margin-bottom:14px;}
+  .msg.show{display:block;}
+  .msg.err{background:var(--pink-tint); color:var(--danger);}
+  .msg.ok{background:var(--green-tint); color:var(--green);}
+  .tablewrap{overflow-x:auto; background:var(--white); border-radius:12px; box-shadow:0 2px 12px rgba(22,35,92,.06);}
+  table{width:100%; border-collapse:collapse;}
+  th{background:var(--navy); color:#fff; font-size:12px; font-weight:800; padding:10px 12px; text-align:left; white-space:nowrap;}
+  td{font-size:13px; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  tr.pending td{color:var(--slate); background:#FBFCFE;}
+  .badge{display:inline-block; font-size:11.5px; font-weight:800; padding:3px 10px; border-radius:999px;}
+  .badge.done{background:var(--green-tint); color:var(--green);}
+  .badge.none{background:#EEF0F5; color:var(--slate);}
+  .detail td{background:#FAFBFF; white-space:pre-wrap; font-size:12.5px; line-height:1.65;}
+  .detail h4{margin:10px 0 2px; font-size:12px; color:var(--blue);}
+  .detail h4:first-child{margin-top:0;}
+  .login{max-width:360px; margin:130px auto; background:#fff; border-radius:16px; padding:28px 26px; box-shadow:0 8px 24px rgba(22,35,92,.08);}
+  .login h2{font-size:16px; color:var(--navy); margin:0 0 16px;}
+  .login input{width:100%; font-family:inherit; font-size:14.5px; border:1.5px solid var(--line); border-radius:10px; padding:10px 12px; background:var(--paper); outline:none;}
+  .login input:focus{border-color:var(--blue); background:#fff;}
+  .empty{padding:60px 0; text-align:center; color:var(--slate);}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// 배포한 Apps Script 웹 앱 URL (index.html 의 API_URL 과 동일한 값)
+const API_URL = "https://script.google.com/macros/s/AKfycbwn1SS-lgPvT92ZJwbbGHXdEBiQAdKUKsC01LXfSIN0jqXD5k1z4RyFsQVu6sa5QCzLuA/exec";
+const TEMPLATE_URL = "template.docx";
+
+// 코치-피코치 매칭 명단 (index.html 과 동일)
+const COACH_PAIRS = [
+  ['구도일','박건도'],['구남규','안재균'],['김문규','김민재'],['김상종','지다빈'],['김세연','박소진'],['김은아','김주현'],
+  ['김수한','김인하'],['김장혁','문송주'],['조건영','이재홍'],['한승희','이선민'],['신미영','권영선'],['박대진','황해수'],
+  ['문채영','안예진'],['김희영','변한준'],['민재원','강혁준'],['임동찬','홍성인'],['박상구','문상현'],['박현미','윤서우'],
+  ['이종문','박초아'],['이종민','안명인'],['이종민','한주원'],['서정현','이준의'],['김태봉','박지은'],['이병언','김수민'],
+  ['최호석','이주현'],['박혜준','유우정'],['설도환','원종빈'],['신자영','김주연'],['신정호','최민서'],['안나은','이정환']
+];
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+let RECORDS = [];      // 서버에서 받은 제출본
+let ROWS = [];         // 명단 기준 표시 행: {coach, coachee, rec|null}
+let templateBuf = null;
+
+// ---------- 로그인 ----------
+function renderLogin(err){
+  $('app').innerHTML = `
+  <div class="login">
+    <h2>종합 코칭리포트 관리자</h2>
+    <input type="password" id="tok" placeholder="관리자 토큰을 입력하세요" autocomplete="off">
+    <div class="msg err ${err ? 'show' : ''}" style="margin:10px 0 0">${esc(err || '')}</div>
+    <button class="btn" id="loginBtn" style="width:100%; margin-top:14px">확인</button>
+  </div>`;
+  $('loginBtn').onclick = () => { const t = $('tok').value.trim(); if(!t) return; sessionStorage.setItem('adminToken', t); load(); };
+  $('tok').onkeydown = e => { if(e.key === 'Enter') $('loginBtn').click(); };
+}
+
+async function fetchRecords(token){
+  const res = await fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify({action:'list', token})});
+  return res.json();
+}
+
+async function load(){
+  const token = sessionStorage.getItem('adminToken') || '';
+  if(!token){ renderLogin(); return; }
+  $('app').innerHTML = '<div class="wrap"><div class="empty">불러오는 중...</div></div>';
+  let json;
+  try{ json = await fetchRecords(token); }
+  catch(e){ $('app').innerHTML = '<div class="wrap"><div class="empty">불러오기에 실패했습니다. API_URL 과 네트워크를 확인해 주세요.</div></div>'; return; }
+  if(json.error === 'unauthorized'){ sessionStorage.removeItem('adminToken'); renderLogin('토큰이 올바르지 않습니다.'); return; }
+  if(json.error){ $('app').innerHTML = `<div class="wrap"><div class="empty">오류: ${esc(json.error)}</div></div>`; return; }
+  RECORDS = json.records || [];
+  buildRows();
+  renderMain();
+}
+
+function buildRows(){
+  const used = new Set();
+  ROWS = COACH_PAIRS.map(([coach, coachee]) => {
+    const rec = RECORDS.find(r => r.coach === coach && r.coachee === coachee) || null;
+    if(rec) used.add(rec);
+    return {coach, coachee, rec};
+  });
+  // 명단에 없는 이름으로 제출된 건도 누락 없이 표시
+  RECORDS.filter(r => !used.has(r)).forEach(r => ROWS.push({coach:r.coach, coachee:r.coachee, rec:r, extra:true}));
+}
+
+// ---------- 화면 ----------
+function fmtDT(iso){ const d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleString('ko-KR',{year:'2-digit',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); }
+
+function renderMain(){
+  const done = ROWS.filter(r => r.rec).length;
+  $('app').innerHTML = `
+  <div class="wrap">
+    <div class="head">
+      <div><h1>종합 코칭리포트 제출 현황</h1><div class="sub">제출본은 Word(.docx)로 자동 변환되어 다운로드됩니다.</div></div>
+      <div class="btns">
+        <button class="btn ghost" id="refreshBtn">새로고침</button>
+        <button class="btn" id="zipBtn" ${done ? '' : 'disabled'}>제출 완료분 전체 다운로드 (zip)</button>
+        <button class="btn ghost" id="logoutBtn">로그아웃</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>${done}</b><span>제출 완료</span></div>
+      <div class="stat"><b>${ROWS.length - done}</b><span>미제출</span></div>
+      <div class="stat"><b>${ROWS.length}</b><span>전체 (코치-피코치)</span></div>
+    </div>
+    <div class="msg" id="msg"></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>코치</th><th>피코치</th><th>상태</th><th>제출시각</th><th>코칭기간</th><th>회기</th><th>설문 발송</th><th></th></tr></thead>
+      <tbody>
+      ${ROWS.map((r, i) => r.rec ? `
+        <tr>
+          <td><b>${esc(r.coach)}</b>${r.extra ? ' <span class="badge none">명단 외</span>' : ''}</td><td>${esc(r.coachee)}</td>
+          <td><span class="badge done">제출</span></td>
+          <td>${fmtDT(r.rec.submitted_at)}</td>
+          <td>${esc(r.rec.start_date)} ~ ${esc(r.rec.end_date)}</td>
+          <td>${esc(sessionsLabel(r.rec))}</td>
+          <td>${esc(r.rec.satisfaction)}</td>
+          <td style="white-space:nowrap">
+            <button class="btn ghost sm" data-prev="${i}">내용 보기</button>
+            <button class="btn sm" data-dl="${i}">Word 다운로드</button>
+          </td>
+        </tr>
+        <tr class="detail" id="detail_${i}" style="display:none"><td colspan="8">${detailHtml(r.rec)}</td></tr>` : `
+        <tr class="pending">
+          <td><b>${esc(r.coach)}</b></td><td>${esc(r.coachee)}</td>
+          <td><span class="badge none">미제출</span></td><td colspan="5">-</td>
+        </tr>`).join('')}
+      </tbody></table></div>
+  </div>`;
+
+  $('refreshBtn').onclick = load;
+  $('logoutBtn').onclick = () => { sessionStorage.removeItem('adminToken'); renderLogin(); };
+  $('zipBtn').onclick = downloadAllZip;
+  document.querySelectorAll('[data-dl]').forEach(b => b.onclick = () => downloadOne(+b.dataset.dl, b));
+  document.querySelectorAll('[data-prev]').forEach(b => b.onclick = () => {
+    const el = $('detail_' + b.dataset.prev); el.style.display = el.style.display === 'none' ? '' : 'none';
+  });
+}
+
+function sessionsLabel(r){ return r.sessions === '기타' ? `기타(${r.sessions_etc})` : `${r.sessions}회`; }
+function detailHtml(r){
+  const items = [['코칭 내용', r.content],
+    ['피코치의 변화와 성장', r.change], ['코치의 변화와 성장', r.coach_growth], ['코치 종합 의견 및 제언', r.opinion]];
+  return `<div style="margin-bottom:6px">비대면 ${esc(r.remote)}회 / 대면 ${esc(r.onsite)}회 / 합계 ${esc(r.total)}회</div>` +
+    items.map(([k, v]) => `<h4>${k}</h4>${esc(v)}`).join('');
+}
+
+function showMsg(text, ok){
+  const m = $('msg'); if(!m) return;
+  m.textContent = text; m.className = 'msg show ' + (ok ? 'ok' : 'err');
+}
+
+// ---------- Word 생성 ----------
+function ymd(s){ const [y, m, d] = String(s).split('-'); return `${y}년 ${parseInt(m,10)}월 ${parseInt(d,10)}일`; }
+
+// 시트 한 행 → 템플릿 자리표시자 값
+function toTemplateData(r){
+  const chk = v => (r.sessions === v ? '☑' : '□');
+  return {
+    coach: r.coach, coachee: r.coachee,
+    period: `${ymd(r.start_date)} ~ ${ymd(r.end_date)}`,
+    chk2: chk('2'), chk3: chk('3'), chkE: chk('기타'), etc: r.sessions === '기타' ? r.sessions_etc : '',
+    remote: r.remote, onsite: r.onsite, total: r.total || String((+r.remote || 0) + (+r.onsite || 0)),
+    content: r.content,
+    change: r.change, coach_growth: r.coach_growth, opinion: r.opinion
+  };
+}
+
+async function getTemplate(){
+  if(templateBuf) return templateBuf;
+  const res = await fetch(TEMPLATE_URL, {cache:'no-store'});
+  if(!res.ok) throw new Error('template_not_found');
+  templateBuf = await res.arrayBuffer();
+  return templateBuf;
+}
+
+async function makeDocx(rec){
+  const buf = await getTemplate();
+  const doc = new window.docxtemplater(new window.PizZip(buf), {
+    paragraphLoop: true, linebreaks: true, nullGetter: () => ''
+  });
+  doc.render(toTemplateData(rec));
+  return doc.getZip().generate({type:'uint8array', compression:'DEFLATE'});
+}
+
+function yymmdd(iso){
+  const d = new Date(iso); if(isNaN(d)) return '000000';
+  return String(d.getFullYear()).slice(2) + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+}
+function safe(s){ return String(s).replace(/[\\/:*?"<>|]/g, '_'); }
+
+// 파일명: (종합코칭리포트)서울대_커리어코칭_코치명_제출일(YYMMDD).docx — 같은 코치에 피코치가 여럿이면 피코치명을 덧붙임
+function fileName(rec){
+  const multi = COACH_PAIRS.filter(p => p[0] === rec.coach).length > 1;
+  return `(종합코칭리포트)서울대_커리어코칭_${safe(rec.coach)}${multi ? '_' + safe(rec.coachee) : ''}_${yymmdd(rec.submitted_at)}.docx`;
+}
+
+function saveBlob(blob, name){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+async function downloadOne(i, btn){
+  const r = ROWS[i].rec; if(!r) return;
+  const prev = btn.textContent; btn.disabled = true; btn.textContent = '생성 중...';
+  try{ saveBlob(new Blob([await makeDocx(r)], {type: DOCX_MIME}), fileName(r)); }
+  catch(e){ console.error(e); showMsg('Word 생성에 실패했습니다: ' + (e.message || e), false); }
+  btn.disabled = false; btn.textContent = prev;
+}
+
+async function downloadAllZip(){
+  const btn = $('zipBtn'); const prev = btn.textContent; btn.disabled = true;
+  try{
+    const zip = new window.JSZip(); const used = {};
+    const list = ROWS.filter(r => r.rec);
+    for(let k = 0; k < list.length; k++){
+      btn.textContent = `생성 중... (${k+1}/${list.length})`;
+      let name = fileName(list[k].rec);
+      if(used[name]){ name = name.replace(/\.docx$/, `_${safe(list[k].coachee)}.docx`); }
+      used[name] = 1;
+      zip.file(name, await makeDocx(list[k].rec));
+    }
+    saveBlob(await zip.generateAsync({type:'blob'}), `종합코칭리포트_전체_${yymmdd(new Date().toISOString())}.zip`);
+    showMsg(`${list.length}건을 zip으로 내려받았습니다.`, true);
+  }catch(e){ console.error(e); showMsg('zip 생성에 실패했습니다: ' + (e.message || e), false); }
+  btn.disabled = false; btn.textContent = prev;
+}
+
+load();
+</script>
+</body>
+</html>

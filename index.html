@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>서울대학교 대학원생 대상 1:1 커리어코칭 종합 코칭리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16235C; --blue:#2F6FED; --blue-tint:#EAF1FF;
+    --orange:#FF7A32; --orange-tint:#FFF0E4; --pink:#FF4D79; --pink-tint:#FFEAF0;
+    --paper:#F5F7FC; --white:#FFFFFF; --ink:#20242C; --slate:#697386; --line:#E7ECF7;
+    --danger:#D9455F; --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--navy);}
+  body{margin:0; font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    background:var(--navy); color:var(--ink); line-height:1.65;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 16px 60px;}
+
+  .band{position:relative; height:74px; overflow:hidden;}
+  .band .star{position:absolute; color:#FFFFFF; opacity:.85;}
+  .band .star.s1{top:14px; left:12%; font-size:16px;}
+  .band .star.s2{top:36px; left:26%; font-size:10px;}
+  .band .star.s3{top:10px; right:16%; font-size:13px;}
+  .band .star.s4{top:40px; right:8%; font-size:18px;}
+  .band .dot{position:absolute; border-radius:50%; background:rgba(255,255,255,.35);}
+  .band .dot.d1{width:8px; height:8px; top:22px; left:44%;}
+  .band .dot.d2{width:5px; height:5px; top:48px; right:32%;}
+
+  .sheet{background:var(--white); border-radius:22px; margin-top:-26px; box-shadow:0 18px 40px rgba(15,25,70,0.25);}
+  .sheet-inner{padding:32px 30px 28px;}
+  @media (max-width:520px){ .sheet-inner{padding:26px 20px 24px;} }
+
+  .hero{padding:6px 0 24px; text-align:center;}
+  .hero .eyebrow{display:inline-block; font-size:12px; font-weight:800; letter-spacing:.03em;
+    color:var(--white); background:var(--orange); padding:6px 14px; border-radius:999px; margin-bottom:16px;}
+  .hero h1{font-size:24px; font-weight:800; color:var(--navy); margin:0 0 10px; letter-spacing:-0.01em; line-height:1.45; word-break:keep-all;}
+  @media (max-width:420px){ .hero h1{font-size:20px; line-height:1.4;} }
+  .hero p{font-size:13.5px; color:var(--slate); margin:0; word-break:keep-all;}
+  .hero-dots{display:flex; justify-content:center; gap:7px; margin-top:16px;}
+  .hero-dots span{width:7px; height:7px; border-radius:50%;}
+  .hero-dots span:nth-child(1){background:var(--blue);}
+  .hero-dots span:nth-child(2){background:var(--orange);}
+  .hero-dots span:nth-child(3){background:var(--pink);}
+
+  .notice{display:flex; align-items:flex-start; gap:10px; background:var(--orange-tint); border-radius:12px;
+    padding:12px 16px; font-size:13px; font-weight:700; color:var(--navy); margin:20px 0 24px;}
+  .notice-icon{width:22px; height:22px; border-radius:50%; background:var(--orange); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; margin-top:1px;}
+
+  .sec-title{font-size:13px; font-weight:800; color:var(--blue); letter-spacing:.02em; margin:26px 2px 10px;}
+  .card{background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 22px; margin-bottom:12px; box-shadow:0 2px 10px rgba(22,35,92,0.04);}
+  .card-2col{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:520px){ .card-2col{grid-template-columns:1fr;} }
+  .q-label{font-size:14px; font-weight:700; color:var(--ink); margin-bottom:8px; display:flex; align-items:flex-start; gap:6px;}
+  .q-label .req{color:var(--pink); font-weight:700;}
+  .q-desc{font-size:12.5px; color:var(--slate); margin:-4px 0 12px;}
+  input[type="text"], input[type="date"], input[type="number"], select, textarea{
+    width:100%; font-family:inherit; font-size:14.5px; color:var(--ink);
+    background:var(--paper); border:1.5px solid var(--line); border-radius:10px;
+    padding:10px 12px; outline:none; transition:border-color .15s ease, background .15s ease;}
+  input:focus, select:focus, textarea:focus{border-color:var(--blue); background:var(--white);}
+  input[type="date"]{line-height:1.4;}
+  textarea{resize:vertical; min-height:130px;}
+  select{appearance:none; -webkit-appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23697386' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 13px center; padding-right:36px;}
+
+  .range-row{display:flex; align-items:center; gap:10px;}
+  .range-row input{flex:1;}
+  .sep{font-size:13px; font-weight:700; color:var(--slate); flex-shrink:0;}
+  .count-row{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-items:end;}
+  @media (max-width:520px){ .count-row{grid-template-columns:1fr;} }
+  .count-row .mini{font-size:12.5px; font-weight:700; color:var(--slate); margin-bottom:6px;}
+  .total-box{background:var(--blue-tint); border:1.5px solid var(--blue-tint); border-radius:10px; padding:10px 12px;
+    font-size:14.5px; font-weight:800; color:var(--navy);}
+
+  .radio-inline{display:flex; flex-wrap:wrap; gap:8px;}
+  .radio-item{display:flex; align-items:center; gap:10px; cursor:pointer; background:var(--paper);
+    border:1.5px solid var(--line); border-radius:10px; padding:11px 16px; font-size:14.5px; color:var(--ink);}
+  .radio-item input{width:auto; margin:0; accent-color:var(--blue);}
+  .radio-item:has(input:checked){border-color:var(--blue); background:var(--blue-tint); font-weight:700;}
+
+  .error-msg{font-size:12.5px; color:var(--danger); margin-top:7px; display:none;}
+  .error-msg.show{display:block;}
+  .card.invalid{border-color:var(--danger);}
+
+  .submit-wrap{margin-top:26px; padding-top:6px;}
+  .submit-btn{width:100%; background:var(--blue); color:var(--white); border:none; border-radius:14px;
+    padding:16px; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 8px 20px rgba(47,111,237,0.32);
+    transition:background .15s ease, transform .1s ease;}
+  .submit-btn:hover{background:#2559C7;}
+  .submit-btn:active{transform:scale(.99);}
+  .submit-btn:disabled{background:var(--slate); cursor:not-allowed; box-shadow:none;}
+  .submit-note{font-size:12px; color:var(--slate); text-align:center; margin-top:10px; word-break:keep-all;}
+  .submit-fail{display:none; background:var(--pink-tint); color:var(--danger); font-weight:700; font-size:13.5px;
+    border-radius:12px; padding:12px 16px; margin-bottom:14px; text-align:center;}
+  .submit-fail.show{display:block;}
+  .draft-note{font-size:12px; color:var(--slate); text-align:right; margin:-6px 2px 10px; min-height:18px;}
+
+  .page-footer{margin-top:24px; padding:0 16px 8px; display:flex; justify-content:center;}
+  .footer-logo{height:32px; width:auto; display:block; filter:brightness(0) invert(1);}
+
+  .success-screen{max-width:560px; margin:80px auto; text-align:center; padding:0 20px;}
+  .success-icon{width:60px; height:60px; border-radius:50%; background:var(--blue); color:var(--white);
+    display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 22px;
+    font-weight:800; box-shadow:0 8px 20px rgba(47,111,237,0.35);}
+  .success-screen h2{font-size:19px; color:var(--white); margin:0 0 10px;}
+  .success-screen p{font-size:14px; color:rgba(255,255,255,0.75); word-break:keep-all;}
+  .success-screen .again-btn{margin-top:26px; display:inline-block; background:var(--white); color:var(--navy);
+    border:none; border-radius:12px; padding:13px 26px; font-size:14px; font-weight:800; cursor:pointer;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// 배포한 Apps Script 웹 앱 URL 로 교체하세요 (admin.html 의 API_URL 과 동일한 값)
+const API_URL = "https://script.google.com/macros/s/AKfycbwn1SS-lgPvT92ZJwbbGHXdEBiQAdKUKsC01LXfSIN0jqXD5k1z4RyFsQVu6sa5QCzLuA/exec";
+
+function escapeHtml(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// 코치-피코치 매칭 명단 (이 웹앱 전용 사본)
+const COACH_PAIRS = [
+  ['구도일','박건도'],['구남규','안재균'],['김문규','김민재'],['김상종','지다빈'],['김세연','박소진'],['김은아','김주현'],
+  ['김수한','김인하'],['김장혁','문송주'],['조건영','이재홍'],['한승희','이선민'],['신미영','권영선'],['박대진','황해수'],
+  ['문채영','안예진'],['김희영','변한준'],['민재원','강혁준'],['임동찬','홍성인'],['박상구','문상현'],['박현미','윤서우'],
+  ['이종문','박초아'],['이종민','안명인'],['이종민','한주원'],['서정현','이준의'],['김태봉','박지은'],['이병언','김수민'],
+  ['최호석','이주현'],['박혜준','유우정'],['설도환','원종빈'],['신자영','김주연'],['신정호','최민서'],['안나은','이정환']
+];
+const COACH_NAMES = Array.from(new Set(COACH_PAIRS.map(p => p[0])));
+
+const DRAFT_KEY = 'summaryReportDraft_v1';
+const TEXT_IDS = ['content','change','coach_growth','opinion'];
+
+function $(id){ return document.getElementById(id); }
+
+function updateCoachee(){
+  const coach = $('q_coach').value;
+  const sel = $('q_coachee');
+  const list = COACH_PAIRS.filter(p => p[0] === coach).map(p => p[1]);
+  if(!coach){ sel.innerHTML = '<option value="">먼저 코치명을 선택해 주세요</option>'; return; }
+  sel.innerHTML = (list.length === 1 ? '' : '<option value="">선택해 주세요</option>') +
+    list.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('');
+}
+
+function intVal(id){ const v = parseInt($(id).value, 10); return isNaN(v) ? 0 : v; }
+function updateTotal(){ $('q_total').textContent = (intVal('q_remote') + intVal('q_onsite')) + '회'; }
+function updateEtc(){
+  const isEtc = document.querySelector('input[name="q_sessions"]:checked')?.value === '기타';
+  $('etcWrap').style.display = isEtc ? 'block' : 'none';
+  if(!isEtc) $('q_sessions_etc').value = '';
+}
+
+// ---- 임시저장 (이 기기 브라우저에만 저장. 제출 시 삭제) ----
+function saveDraft(){
+  try{
+    const d = {};
+    ['q_coach','q_coachee','q_start','q_end','q_remote','q_onsite','q_sessions_etc'].forEach(id => d[id] = $(id).value);
+    d.sessions = document.querySelector('input[name="q_sessions"]:checked')?.value || '';
+    d.sat = document.querySelector('input[name="q_sat"]:checked')?.value || '';
+    TEXT_IDS.forEach(k => d['t_'+k] = $('q_'+k).value);
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
+    $('draftNote').textContent = '임시저장됨 · ' + new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){}
+}
+function loadDraft(){
+  try{
+    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return;
+    const d = JSON.parse(raw);
+    $('q_coach').value = d.q_coach || ''; updateCoachee();
+    if(d.q_coachee) $('q_coachee').value = d.q_coachee;
+    ['q_start','q_end','q_remote','q_onsite','q_sessions_etc'].forEach(id => { if(d[id] != null) $(id).value = d[id]; });
+    if(d.sessions){ const r = document.querySelector(`input[name="q_sessions"][value="${d.sessions}"]`); if(r) r.checked = true; }
+    if(d.sat){ const r = document.querySelector(`input[name="q_sat"][value="${d.sat}"]`); if(r) r.checked = true; }
+    TEXT_IDS.forEach(k => { if(d['t_'+k]) $('q_'+k).value = d['t_'+k]; });
+    updateEtc(); updateTotal();
+    $('draftNote').textContent = '이전에 작성하던 내용을 불러왔습니다.';
+  }catch(e){}
+}
+function clearDraft(){ try{ localStorage.removeItem(DRAFT_KEY); }catch(e){} }
+
+function textCard(id, desc, ph){
+  return `
+  <div class="card">
+    <div class="q-desc" style="margin-top:0">${desc}</div>
+    <textarea id="q_${id}" placeholder="${ph || ''}"></textarea>
+    <div class="error-msg" id="err_${id}">내용을 작성해 주세요.</div>
+  </div>`;
+}
+
+function renderForm(){
+  $('app').innerHTML = `
+  <div class="wrap">
+    <div class="band">
+      <span class="star s1">✦</span><span class="star s2">✦</span><span class="star s3">✦</span><span class="star s4">✦</span>
+      <span class="dot d1"></span><span class="dot d2"></span>
+    </div>
+    <div class="sheet"><div class="sheet-inner">
+      <div class="hero">
+        <span class="eyebrow">COACHING SUMMARY</span>
+        <h1>서울대학교 대학원생 대상<br>1:1 커리어코칭 종합 코칭리포트</h1>
+        <p>2회기 + 1회기(선택) 전체 세션을 종합하여 작성해 주세요.<br>작성하신 내용은 종합 코칭리포트(Word)로 자동 정리됩니다.</p>
+        <div class="hero-dots"><span></span><span></span><span></span></div>
+      </div>
+
+      <div class="notice">
+        <span class="notice-icon">i</span>
+        <span>피코치 발언은 가능한 표현 그대로 인용하고, 사실·관찰과 코치의 해석을 구분하여 작성해 주세요. 민감한 개인정보는 최소화해 주세요.</span>
+      </div>
+
+      <form id="reportForm" novalidate>
+        <div class="sec-title">1. 기본 정보</div>
+        <div class="card">
+          <div class="card-2col">
+            <div>
+              <div class="q-label">코치명 <span class="req">*</span></div>
+              <select id="q_coach">
+                <option value="">본인 성함을 선택해 주세요</option>
+                ${COACH_NAMES.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join('')}
+              </select>
+              <div class="error-msg" id="err_coach">코치명을 선택해 주세요.</div>
+            </div>
+            <div>
+              <div class="q-label">피코치명 <span class="req">*</span></div>
+              <select id="q_coachee"><option value="">먼저 코치명을 선택해 주세요</option></select>
+              <div class="error-msg" id="err_coachee">피코치명을 선택해 주세요.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="q-label">코칭기간 <span class="req">*</span></div>
+          <div class="q-desc">첫 코칭일부터 마지막 코칭일까지 선택해 주세요.</div>
+          <div class="range-row">
+            <input type="date" id="q_start"><span class="sep">~</span><input type="date" id="q_end">
+          </div>
+          <div class="error-msg" id="err_period">코칭 시작일과 종료일을 올바르게 선택해 주세요. (종료일은 시작일 이후)</div>
+        </div>
+
+        <div class="card">
+          <div class="q-label">코칭회기 <span class="req">*</span></div>
+          <div class="radio-inline">
+            <label class="radio-item"><input type="radio" name="q_sessions" value="2"><span>2회</span></label>
+            <label class="radio-item"><input type="radio" name="q_sessions" value="3"><span>3회</span></label>
+            <label class="radio-item"><input type="radio" name="q_sessions" value="기타"><span>기타</span></label>
+          </div>
+          <div id="etcWrap" style="display:none; margin-top:10px">
+            <input type="text" id="q_sessions_etc" placeholder="회기 수를 직접 입력해 주세요 (예: 4회)" maxlength="20">
+          </div>
+          <div class="error-msg" id="err_sessions">코칭회기를 선택하고, '기타'인 경우 직접 입력해 주세요.</div>
+        </div>
+
+        <div class="card">
+          <div class="q-label">진행 방식 <span class="req">*</span></div>
+          <div class="q-desc">방식별로 진행한 회기 수를 입력해 주세요. 합계는 자동 계산됩니다.</div>
+          <div class="count-row">
+            <div><div class="mini">비대면(전화·줌)</div><input type="number" id="q_remote" min="0" max="20" inputmode="numeric" placeholder="0"></div>
+            <div><div class="mini">대면</div><input type="number" id="q_onsite" min="0" max="20" inputmode="numeric" placeholder="0"></div>
+            <div><div class="mini">합계</div><div class="total-box" id="q_total">0회</div></div>
+          </div>
+          <div class="error-msg" id="err_method_count">회기 수를 입력해 주세요. (합계가 선택한 코칭회기와 일치해야 합니다)</div>
+        </div>
+
+        <div class="sec-title">2. 코칭 내용 <span style="color:var(--pink)">*</span></div>
+        ${textCard('content',
+          '<b>코칭 목표</b>&nbsp; 피코치가 코칭을 통해 다루고자 한 주제와 기대한 변화<br>' +
+          '<b>주요 내용·과정</b>&nbsp; 자기이해 / 상황 및 선택지 탐색 / 실행 방향 등 핵심 중심으로<br>' +
+          '<b>기여 요인</b>&nbsp; 변화에 도움이 된 요인 (피코치의 노력, 코칭 방식, 활용한 자원 등)')}
+
+        <div class="sec-title">3. 피코치의 변화와 성장 <span style="color:var(--pink)">*</span></div>
+        ${textCard('change','코칭 시작 시점과 비교하여 나타난 인식·태도·행동의 변화, 피코치가 직접 언급한 소감을 구체적으로 기록해 주세요.')}
+
+        <div class="sec-title">4. 코치의 변화와 성장 <span style="color:var(--pink)">*</span></div>
+        ${textCard('coach_growth','코칭 과정에서 코치 본인이 느끼고 배운 점, 새롭게 발견한 점을 기록해 주세요.')}
+
+        <div class="sec-title">5. 코치 종합 의견 및 제언 <span style="color:var(--pink)">*</span></div>
+        ${textCard('opinion','피코치의 향후 실행계획(행동·시점), 지속 성장을 위한 제언, 프로그램 운영에 대한 의견을 기록해 주세요.')}
+
+        <div class="sec-title">추가 확인</div>
+        <div class="card">
+          <div class="q-label">코칭 종료 후, 피코치에게 만족도 설문을 발송하셨나요? <span class="req">*</span></div>
+          <div class="radio-inline">
+            <label class="radio-item"><input type="radio" name="q_sat" value="예"><span>예</span></label>
+            <label class="radio-item"><input type="radio" name="q_sat" value="아니오"><span>아니오</span></label>
+          </div>
+          <div class="error-msg" id="err_sat">만족도 설문 발송 여부를 선택해 주세요.</div>
+        </div>
+
+        <div class="draft-note" id="draftNote"></div>
+        <div class="submit-wrap">
+          <div class="submit-fail" id="submitFail"></div>
+          <button type="submit" class="submit-btn" id="submitBtn">종합 코칭리포트 제출하기</button>
+          <div class="submit-note">같은 코치·피코치로 다시 제출하면 기존 제출 내용이 새 내용으로 수정됩니다.<br>작성 중인 내용은 이 기기에 자동 임시저장됩니다.</div>
+        </div>
+      </form>
+    </div></div>
+
+    <div class="page-footer"><img src="logo.png" alt="클립스컨설팅" class="footer-logo"></div>
+  </div>`;
+
+  $('reportForm').addEventListener('submit', handleSubmit);
+  $('q_coach').addEventListener('change', updateCoachee);
+  document.querySelectorAll('input[name="q_sessions"]').forEach(r => r.addEventListener('change', updateEtc));
+  ['q_remote','q_onsite'].forEach(id => $(id).addEventListener('input', updateTotal));
+  $('reportForm').addEventListener('input', saveDraft);
+  $('reportForm').addEventListener('change', saveDraft);
+  loadDraft();
+}
+
+function clearErrors(){
+  document.querySelectorAll('.error-msg.show').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.card.invalid').forEach(e => e.classList.remove('invalid'));
+}
+function fail(errId, anchorId){
+  const e = $(errId); if(e) e.classList.add('show');
+  const c = $(anchorId)?.closest('.card') || e?.closest('.card'); if(c) c.classList.add('invalid');
+}
+
+async function handleSubmit(ev){
+  ev.preventDefault();
+  clearErrors();
+  let ok = true;
+
+  const coach = $('q_coach').value.trim(), coachee = $('q_coachee').value.trim();
+  const start = $('q_start').value, end = $('q_end').value;
+  const sessions = document.querySelector('input[name="q_sessions"]:checked')?.value || '';
+  const etc = $('q_sessions_etc').value.trim();
+  const remote = intVal('q_remote'), onsite = intVal('q_onsite'), total = remote + onsite;
+  const sat = document.querySelector('input[name="q_sat"]:checked')?.value || '';
+
+  if(!coach){ fail('err_coach','q_coach'); ok = false; }
+  if(!coachee){ fail('err_coachee','q_coachee'); ok = false; }
+  if(!start || !end || end < start){ fail('err_period','q_start'); ok = false; }
+  if(!sessions || (sessions === '기타' && !etc)){ fail('err_sessions','etcWrap'); ok = false; }
+  if(total < 1 || (sessions === '2' && total !== 2) || (sessions === '3' && total !== 3)){ fail('err_method_count','q_remote'); ok = false; }
+
+  const texts = {};
+  TEXT_IDS.forEach(k => {
+    texts[k] = $('q_'+k).value.trim();
+    if(!texts[k]){ fail('err_'+k, 'q_'+k); ok = false; }
+  });
+  if(!sat){ fail('err_sat','q_sat'); ok = false; }
+
+  if(!ok){ document.querySelector('.card.invalid')?.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+
+  const payload = Object.assign({
+    coach, coachee, start_date: start, end_date: end,
+    sessions, sessions_etc: etc, remote, onsite, satisfaction: sat
+  }, texts);
+
+  const failBox = $('submitFail'); failBox.classList.remove('show'); failBox.textContent = '';
+  const btn = $('submitBtn'); const prev = btn.textContent;
+  btn.disabled = true; btn.textContent = '제출 중...';
+
+  try{
+    if(API_URL.indexOf('https://script.google.com/') !== 0 && API_URL.indexOf('http') !== 0) throw new Error('api_not_configured');
+    const res = await fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload)});
+    const data = await res.json();
+    if(data.error){ const e = new Error(data.error); e.code = data.error; throw e; }
+    clearDraft();
+    renderSuccess(!!data.updated);
+  }catch(err){
+    btn.disabled = false; btn.textContent = prev;
+    let msg = '제출 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요. (작성하신 내용은 임시저장되어 있습니다)';
+    if(err.code === 'invalid_input' || err.code === 'too_long') msg = '입력값을 다시 확인해 주세요. (너무 긴 항목이 없는지 확인)';
+    else if(!navigator.onLine) msg = '인터넷 연결을 확인한 후 다시 시도해 주세요.';
+    failBox.textContent = msg; failBox.classList.add('show');
+    failBox.scrollIntoView({behavior:'smooth', block:'center'});
+    console.error(err);
+  }
+}
+
+function renderSuccess(updated){
+  $('app').innerHTML = `
+  <div class="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>${updated ? '종합 코칭리포트가 수정되었습니다' : '종합 코칭리포트가 제출되었습니다'}</h2>
+    <p>${updated ? '기존에 제출하신 내용이 새 내용으로 수정되었습니다.' : '소중한 코칭 기록 작성에 감사드립니다.'}</p>
+    <button class="again-btn" id="againBtn">다른 피코치 리포트 작성하기</button>
+  </div>`;
+  $('againBtn').addEventListener('click', renderForm);
+}
+
+renderForm();
+</script>
+</body>
+</html>
